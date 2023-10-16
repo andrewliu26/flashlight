@@ -6,15 +6,18 @@ import android.content.pm.PackageManager
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraManager
 import android.os.Bundle
+import android.text.Editable
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.EditText
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.switchmaterial.SwitchMaterial
+import java.util.Locale
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
@@ -45,6 +48,26 @@ class MainActivity : AppCompatActivity() {
             isFlashlightOn = isChecked
             handleFlashlight()
         }
+        // Set listener for edit text
+        actionInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString().trim().uppercase()
+                if (input == "ON") {
+                    isFlashlightOn = true
+                    flashlightSwitch.isChecked = true
+                } else if (input == "OFF") {
+                    isFlashlightOn = false
+                    flashlightSwitch.isChecked = false
+                }
+                handleFlashlight()
+            }
+        })
+
+
     }
 
     // Inner class for gesture detection, reduces required methods
@@ -114,4 +137,6 @@ class MainActivity : AppCompatActivity() {
             super.onTouchEvent(event)
         }
     }
+
+
 }
