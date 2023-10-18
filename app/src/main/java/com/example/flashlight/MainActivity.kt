@@ -11,13 +11,13 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.EditText
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import com.google.android.material.switchmaterial.SwitchMaterial
-import java.util.Locale
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
@@ -92,6 +92,8 @@ class MainActivity : AppCompatActivity() {
             // Checks for flashlight on current device
             if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                 cameraManager.setTorchMode(cameraId, isFlashlightOn)
+                // Log flashlight state
+                Log.d("FlashlightState", "Flashlight is ${if (isFlashlightOn) "ON" else "OFF"}")
             } else {
                 Toast.makeText(this, "No flashlight available on this device", Toast.LENGTH_SHORT).show()
             }
